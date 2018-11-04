@@ -1,0 +1,114 @@
+<br>
+<br><br><br><br>
+<form class="form-horizontal" [formGroup]="userForm" (ngSubmit)="addUser(editFlag)" novalidate>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'USER.FIRSTNAME'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.firstName.invalid && userForm.controls.firstName.dirty}">
+      <input type="firstName" formControlName="firstName" class="form-control" id="firstName" placeholder="Enter  First Name">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.firstName.invalid && userForm.controls.firstName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'USER.LASTNAME'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.lastName.invalid && userForm.controls.lastName.dirty}">
+      <input type="lastName" formControlName="lastName" class="form-control" id="lastName" placeholder="Enter  Last Name">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.lastName.invalid && userForm.controls.lastName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'USER.EMPID'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.employeeId.invalid && userForm.controls.employeeId.dirty}">
+      <input type="employeeId" formControlName="employeeId" class="form-control" id="employeeId" placeholder="Enter  employeeId">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.employeeId.invalid && userForm.controls.employeeId.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <input type="hidden" formControlName="userId" class="form-control" id="userId">
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=!editFlag> 
+      <button type="submit" class="btn btn-default">{{'COMMON.ADD'|translate}}</button>
+    </div>
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=editFlag> 
+      <button type="submit" class="btn btn-default">{{'COMMON.EDIT'|translate}}</button>
+    </div>
+    <div class="col-sm-2">
+      <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
+    </div>
+  </div>
+  <br>
+  <hr class="style5">
+  <br>
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <input type="text" formControlName="searchUserName" class="form-control" id="searchUserName" placeholder="{{'COMMON.SEARCH'|translate}}">
+      </div>
+      <div class="col-sm-8">Sort:
+        <button type="button" (click)="sortUser(1)" class="btn btn-default">{{'USER.FIRSTNAME'|translate}}</button>
+        <button type="button" (click)="sortUser(2)" class="btn btn-default">{{'USER.LASTNAME'|translate}}</button>
+        <button type="button" (click)="sortUser(3)" class="btn btn-default">{{'USER.EMPID'|translate}}</button>
+      </div>
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.searchUserName.invalid && userForm.controls.searchUserName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+
+</form>
+
+{{userForm.controls.value | json}}
+
+<br><br>
+<div class="list-group">
+  <div *ngFor="let user of users">
+    <div class="row col-sm-12">
+      <div class="col-sm-4 my-background">
+       {{'USER.FIRSTNAME'|translate}}
+      </div>
+      <div class="col-sm-4 my-background">
+        {{user.firstName}}
+      </div>
+      <div class="col-sm-4">
+        <button type="button" (click)="loadUserById(user.userId)" class="btn btn-default">{{'COMMON.EDIT'|translate}}</button>
+      </div>
+
+    </div>
+    <div class="row col-sm-12">
+      <div class="col-sm-4 my-background">
+        {{'USER.LASTNAME'|translate}}
+      </div>
+      <div class="col-sm-4 my-background">
+        {{user.lastName}}
+      </div>
+      <div class="col-sm-4">
+        <button type="button" (click)="deleteUser(user.userId)" class="btn btn-default">{{'COMMON.DELETE'|translate}}</button>
+      </div>
+    </div>
+    <div class="row col-sm-12">
+      <div class="col-sm-4 my-background">
+        {{'USER.EMPID'|translate}}
+      </div>
+      <div class="col-sm-4 my-background">
+        {{user.employeeId}}
+      </div>
+      <br>
+  <hr class="style5">
+  <br>
+    </div>
+
+  </div>
+</div>

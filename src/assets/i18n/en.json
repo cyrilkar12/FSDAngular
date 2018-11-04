@@ -1,0 +1,22 @@
+{
+    "COMMON":{
+        "SEARCH":"Search...",
+        "ADD":"Add",
+        "RESET":"Reset",
+        "SORT":"Sort:",
+        "EDIT":"Edit",
+        "DELETE":"Delete"
+    },
+    "HEADER": {
+        "ADDPROJECT": "Add Project",
+        "ADDUSER": "Add User",
+        "ADDTASK": "Add Task",
+        "VIEWTASK": "View Task"
+    },
+    "USER":{
+        "FIRSTNAME":"First Name:",
+        "LASTNAME":"Last Name:",
+        "EMPID":"Employee Id:"
+
+    }
+}
