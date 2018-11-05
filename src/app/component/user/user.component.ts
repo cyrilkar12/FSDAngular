@@ -119,6 +119,7 @@ editUser(editUserId:number){
 
 
  searchUser(){
+   console.log("search>>"+this.userForm.value.searchUserName)
   this.userService.getUserByName(this.userForm.value.searchUserName).subscribe(
       (responseData:User[])=>{
         this.users=responseData;

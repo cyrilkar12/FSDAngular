@@ -3,9 +3,11 @@
         "SEARCH":"Search...",
         "ADD":"Add",
         "RESET":"Reset",
-        "SORT":"Sort:",
+        "SORT":"Sort By:",
         "EDIT":"Edit",
-        "DELETE":"Delete"
+        "DELETE":"Delete",
+         "UPDATE":"Update",
+        "SUSPEND":"Suspend"
     },
     "HEADER": {
         "ADDPROJECT": "Add Project",
@@ -18,5 +20,16 @@
         "LASTNAME":"Last Name:",
         "EMPID":"Employee Id:"
 
+    },
+    "PROJECT":{
+        "PROJECT":"Project:",
+        "DATECONT":"Set Start and End Date",
+        "STARTDATE":"Start Date",
+        "ENDDATE":"End Date",
+        "PRIORITY":"Priority:",
+        "MANAGER":"Manager",
+        "NOOFTASK":"No Of Tasks:",
+        "COMPLETE":"Completed",
+        "PRIORITY1":"Priority"
     }
 }

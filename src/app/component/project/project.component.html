@@ -1,0 +1,162 @@
+<br>
+<br><br><br><br>
+<form class="form-horizontal" [formGroup]="projectForm" novalidate>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'PROJECT.PROJECT'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.project.invalid && projectForm.controls.project.dirty}">
+      <input type="text" formControlName="project" class="form-control" id="project" placeholder="Enter Project Name">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.project.invalid && projectForm.controls.project.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <input type="checkbox" id="dateCheckbox" value="1">{{'PROJECT.DATECONT'|translate}}
+     <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
+      <input type="date" formControlName="startDate" class="form-control" id="startDate" placeholder="{{'PROJECT.STARTDATE'|translate}}">
+       <input type="date" formControlName="endDate" class="form-control" id="endDate" placeholder="{{'PROJECT.ENDDATE'|translate}}">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty">
+      field is invalid
+    </div>
+  </div>
+
+
+ <!-- <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'USER.EMPID'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.endDate.invalid && projectForm.controls.endDate.dirty}">
+      <input type="date" formControlName="endDate" class="form-control" id="endDate" placeholder="Enter End Date">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.endDate.invalid && projectForm.controls.endDate.dirty">
+      field is invalid
+    </div>
+  </div>-->
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'PROJECT.PRIORITY'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.priority.invalid && projectForm.controls.priority.dirty}">
+      <input type="range" formControlName="endDate" class="form-control" id="priority" min="0" max="100" value="90">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.priority.invalid && projectForm.controls.priority.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'PROJECT.MANAGER'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.manager.invalid  && projectForm.controls.manager.dirty}">
+      <input type="text" formControlName="manager" class="form-control" id="manager" placeholder="{{'PROJECT.MANAGER'|translate}}">
+      </div>
+      <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.manager.invalid && projectForm.controls.manager.dirty">
+      field is invalid
+    </div>
+
+</div>
+  <!--<div class="form-group row">
+    <label class="control-label col-sm-2" for="name">{{'USER.EMPID'|translate}}</label>
+    <div class="col-sm-5" [ngClass]="{'has-error': projectForm.controls.manager.invalid && projectForm.controls.manager.priority.dirty}">
+      <input type="text" formControlName="manager" class="form-control" id="manager" placeholder="Enter Manager">
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.manager.invalid && projectForm.controls.manager.dirty">
+      field is invalid
+    </div>
+  </div>-->
+
+  <div class="form-group row">
+    <input type="hidden" formControlName="projectId" class="form-control" id="projectId">
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=!editFlag> 
+      <button type="button" class="btn btn-default" (click)="addUser(editFlag)">{{'COMMON.ADD'|translate}}</button>
+    </div>
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=editFlag> 
+      <button type="button" class="btn btn-default"  (click)="addUser(editFlag)">{{'COMMON.EDIT'|translate}}</button>
+    </div>
+    <div class="col-sm-2">
+      <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
+    </div>
+  </div>
+  <br>
+  <hr class="style5">
+  <br>
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="col-sm-4">
+        <input type="text" formControlName="searchProjectName" class="form-control" id="searchProjectName" placeholder="{{'COMMON.SEARCH'|translate}}"
+        (keydown.enter)="searchProject()">
+      </div>
+      <div class="col-sm-8">Sort:
+        <button type="button" (click)="sortUser(1)" class="btn btn-default">{{'PROJECT.STARTDATE'|translate}}</button>
+        <button type="button" (click)="sortUser(2)" class="btn btn-default">{{'PROJECT.ENDDATE'|translate}}</button>
+        <button type="button" (click)="sortUser(3)" class="btn btn-default">{{'PROJECT.PRIORITY1'|translate}}</button>
+        <button type="button" (click)="sortUser(3)" class="btn btn-default">{{'PROJECT.COMPLETE'|translate}}</button>
+      </div>
+    </div>
+    <div class="alert-danger col-sm-4" *ngIf="projectForm.controls.searchProjectName.invalid && projectForm.controls.searchProjectName.dirty">
+      field is invalid
+    </div>
+  </div>
+</form>
+<br>
+  <hr class="style5">
+<br>
+{{projectForm.controls.value | json}}
+
+<br><br>
+<div class="list-group">
+  <div *ngFor="let project of projects">
+    <div class="row col-sm-12">
+      <div class="col-sm-4 my-background">
+       {{'USER.FIRSTNAME'|translate}}
+      </div>
+      <div class="col-sm-4 my-background">
+        {{project.project}}
+      </div>
+      <div class="col-sm-4">
+        <button type="button" (click)="loadUserById(project.projectId)" class="btn btn-default">{{'COMMON.EDIT'|translate}}</button>
+      </div>
+
+    </div>
+    <div class="row col-sm-12">
+      <div class="col-sm-2 my-background">
+        {{'USER.LASTNAME'|translate}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{project.noOfTasks}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{'USER.LASTNAME'|translate}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{project.completed}}
+      </div>
+      <div class="col-sm-4">
+        <button type="button" (click)="suspendProject(project.projectId)" class="btn btn-default">{{'COMMON.DELETE'|translate}}</button>
+      </div>
+    </div>
+
+<div class="row col-sm-12">
+      <div class="col-sm-2 my-background">
+        {{'USER.LASTNAME'|translate}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{project.startDate}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{'USER.LASTNAME'|translate}}
+      </div>
+      <div class="col-sm-2 my-background">
+        {{project.endDate}}
+      </div>
+      <div class="col-sm-4">
+        <button type="button" (click)="suspendProject(project.projectId)" class="btn btn-default">{{'COMMON.DELETE'|translate}}</button>
+      </div>
+    </div>
+<br>
+  <hr class="style5">
+<br>
+  </div>
+</div>

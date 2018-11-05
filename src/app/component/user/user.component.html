@@ -15,7 +15,7 @@
   <div class="form-group row">
     <label class="control-label col-sm-2" for="name">{{'USER.LASTNAME'|translate}}</label>
     <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.lastName.invalid && userForm.controls.lastName.dirty}">
-      <input type="lastName" formControlName="lastName" class="form-control" id="lastName" placeholder="Enter  Last Name">
+      <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Enter  Last Name">
     </div>
     <div class="alert-danger col-sm-4" *ngIf="userForm.controls.lastName.invalid && userForm.controls.lastName.dirty">
       field is invalid
@@ -39,10 +39,10 @@
 
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-2" *ngIf=!editFlag> 
-      <button type="submit" class="btn btn-default">{{'COMMON.ADD'|translate}}</button>
+      <button type="button" class="btn btn-default" (click)="addUser(editFlag)">{{'COMMON.ADD'|translate}}</button>
     </div>
     <div class="col-sm-offset-3 col-sm-2" *ngIf=editFlag> 
-      <button type="submit" class="btn btn-default">{{'COMMON.EDIT'|translate}}</button>
+      <button type="button" class="btn btn-default"  (click)="addUser(editFlag)">{{'COMMON.EDIT'|translate}}</button>
     </div>
     <div class="col-sm-2">
       <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
@@ -54,7 +54,8 @@
   <div class="form-group row">
     <div class="col-sm-12">
       <div class="col-sm-4">
-        <input type="text" formControlName="searchUserName" class="form-control" id="searchUserName" placeholder="{{'COMMON.SEARCH'|translate}}">
+        <input type="text" formControlName="searchUserName" class="form-control" id="searchUserName" placeholder="{{'COMMON.SEARCH'|translate}}"
+        (keydown.enter)="searchUser()">
       </div>
       <div class="col-sm-8">Sort:
         <button type="button" (click)="sortUser(1)" class="btn btn-default">{{'USER.FIRSTNAME'|translate}}</button>

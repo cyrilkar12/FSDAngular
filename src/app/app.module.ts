@@ -8,8 +8,10 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 import { UserComponent } from './component/user/user.component';
 import { HeaderComponent } from './component/header/header.component';
+import { ProjectComponent } from './component/project/project.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 //import {AppComponent} from '.app';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -21,7 +23,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     UserComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,

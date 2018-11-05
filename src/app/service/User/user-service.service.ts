@@ -38,11 +38,13 @@ export class UserServiceService {
   }
 
   getUserByName(userName:String):Observable<any>{
-   return this.httpClient.get('http://localhost:9090/user/searchUser?userName="'+userName+"'");
+   return this.httpClient.get('http://localhost:9090/user/searchUser?userName='+userName);
   }
    
    sortUsers(sortType:number):Observable<any>{
    return this.httpClient.get('http://localhost:9090/user/sortUsers/'+sortType);
   }
+
+  
 
 }
