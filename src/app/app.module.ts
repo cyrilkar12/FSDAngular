@@ -11,6 +11,8 @@ import { HeaderComponent } from './component/header/header.component';
 import { ProjectComponent } from './component/project/project.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { DatePipe } from '@angular/common';
+import {UserPipe} from './pipes/UserPipe';
 
 //import {AppComponent} from '.app';
 // AoT requires an exported function for factories
@@ -24,7 +26,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     UserComponent,
     HeaderComponent,
-    ProjectComponent
+    ProjectComponent,
+    UserPipe
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     AppRoutingModule
   ],
- providers: [{provide: APP_BASE_HREF, useValue : '/' }],
+ providers: [{provide: APP_BASE_HREF, useValue : '/' },DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

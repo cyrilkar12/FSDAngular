@@ -7,7 +7,8 @@
         "EDIT":"Edit",
         "DELETE":"Delete",
          "UPDATE":"Update",
-        "SUSPEND":"Suspend"
+        "SUSPEND":"Suspend",
+        "SEARCH1":"Search"
     },
     "HEADER": {
         "ADDPROJECT": "Add Project",
