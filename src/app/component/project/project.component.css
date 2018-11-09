@@ -5,3 +5,13 @@ hr.style3 {
 .my-background {
   background: #f99;
 }
+
+body {
+    overflow-y:scroll;
+}
+
+.modal-open {overflow-y: auto}
+
+.modal-open .topnavbar-wrapper {
+    padding-right:17px; /* Noticed that right aligned navbar content got overlapped by the .modal scrollbar */
+}

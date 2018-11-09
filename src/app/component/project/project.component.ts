@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output,ViewChild, ElementRef } from '@angular/core';
 import {FormGroup, FormControl, Validator} from "@angular/forms"
 import {UserServiceService} from '../../service/User/user-service.service';
 import {ProjectService} from '../../service/project/project.service';
@@ -17,17 +17,24 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./project.component.css'],
   providers: [DatePipe]
 })
+
 export class ProjectComponent implements OnInit {
+ @ViewChild('closeAddExpenseModal') closeAddExpenseModal: ElementRef;
+
 projects:Project[]=[];
 managers:User[]=[];
 projectForm:FormGroup;
 responseStr:string;
 searchProjectName:number;
 editFlag:boolean;
+display:string
+selectedManager:string;
+selectedManagerId:number;
 
   constructor(private projectService:ProjectService,private datePipe: DatePipe,
       private userService:UserServiceService) {
        this.editFlag = false;
+       this.display='none';
     this.projectForm=new FormGroup({
        projectId:new FormControl(0),
        project:new FormControl('',Validators.pattern('[A-Za-z1-9]{2,20}')),
@@ -36,7 +43,7 @@ editFlag:boolean;
        priority:new FormControl("30",Validators.pattern('[1-9]{1,100}')),
        //status:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
        searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       manager:new FormControl('',Validators.required),
+       manager:new FormControl({value:'',disabled:true},Validators.required),
        userId:new FormControl('',Validators.required)
     });
 
@@ -85,7 +92,7 @@ editFlag:boolean;
        startDate:new FormControl(this.datePipe.transform(editProject.startDate,'y-MM-dd')),
        endDate:new FormControl(this.datePipe.transform(editProject.endDate,'y-MM-dd')),
        priority:new FormControl(editProject.priority),
-       manager:new FormControl(''),
+       manager:new FormControl({value:'',disabled:true},Validators.required),
         searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
        userId:new FormControl('',Validators.required)
        //status:new FormControl(editProject.status),
@@ -103,6 +110,7 @@ editFlag:boolean;
         this.responseStr = error;
       }
     );
+    console.log('projects>>>'+this.projects);
   }
   resetForm(){
    this.projectForm=new FormGroup({
@@ -119,7 +127,25 @@ editFlag:boolean;
   addProject(editFlag:boolean){
     console.log(this.projectForm.value);
     if(!editFlag){
-    this.projectService.addProject(this.projectForm.value).subscribe(
+    var projectManger = this.managers.find(m1=>m1.userId===this.selectedManagerId);
+    console.log('addManager:'+projectManger);
+    let addProject = new Project(
+        this.projectForm.value.projectId,
+        this.projectForm.value.project,
+        this.projectForm.value.startDate,
+        this.projectForm.value.endDate,
+        this.projectForm.value.priority,
+     this.projectForm.value.numberOfTasks,
+     this.projectForm.value.completedTasks,
+     new User(
+       projectManger.userId,
+       projectManger.firstName,
+       projectManger.lastName,
+       projectManger.employeeId
+     )
+    );
+    console.log("addProject:"+addProject);
+    this.projectService.addProject(addProject).subscribe(
       (responseData:Project[])=>{
         this.projects=responseData;
       },
@@ -194,6 +220,22 @@ editProject(editProjectId:number){
         this.responseStr = error;
       }
     );
+ }
+
+ selectManager(userId:number,managerName:string){
+   this.selectedManager = managerName;
+   this.selectedManagerId = userId;
+   this.projectForm.patchValue({
+    'manager':managerName
+   });
+   console.log(">>>"+this.projectForm.value.manager);
+   console.log("Manager:"+this.selectedManagerId+':'+ this.selectedManager);
+   /*this.display='none';*/
+   this.closeAddExpenseModal.nativeElement.click();
+ }
+
+ displayModal(){
+   this.display='block';
  }
 
 }

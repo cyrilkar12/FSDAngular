@@ -4,3 +4,7 @@ main {
     height: 700px;
     padding-left:50px; 
 }
+
+body {
+    overflow-y:scroll;
+}
