@@ -39,6 +39,7 @@ export class ProjectService {
   }
 
   getProjectByName(projectName:String):Observable<any>{
+    console.log("projectName"+projectName);
    return this.httpClient.get('http://localhost:9090/project/searchProject?projectName='+projectName);
   }
    

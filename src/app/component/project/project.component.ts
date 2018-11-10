@@ -85,6 +85,15 @@ selectedManagerId:number;
  loadProjectById(projectId:number){
     this.editFlag = true;
     var editProject = this.projects.find(p1=>p1.projectId===projectId);
+    let editmanagerName:string;
+    if(editProject.user!=null && editProject.user.firstName!=null){
+      editmanagerName = editProject.user.firstName+' '+editProject.user.lastName;
+      this.selectedManagerId = editProject.user.userId;
+    }else{
+      editmanagerName ='';
+    }
+    console.log(editmanagerName);
+ //   this.selectedManagerId=editProject.user.userId;
     console.log(editProject.priority);
     this.projectForm=new FormGroup({
        projectId:new FormControl(editProject.projectId),
@@ -92,11 +101,14 @@ selectedManagerId:number;
        startDate:new FormControl(this.datePipe.transform(editProject.startDate,'y-MM-dd')),
        endDate:new FormControl(this.datePipe.transform(editProject.endDate,'y-MM-dd')),
        priority:new FormControl(editProject.priority),
-       manager:new FormControl({value:'',disabled:true},Validators.required),
+       manager:new FormControl({value:editmanagerName,disabled:true},Validators.required),
         searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
        userId:new FormControl('',Validators.required)
        //status:new FormControl(editProject.status),
     });
+    /*this.projectForm.patchValue({
+    'manager':editmanagerName
+   });*/
   }
 
   loadProjects(){
@@ -113,21 +125,23 @@ selectedManagerId:number;
     console.log('projects>>>'+this.projects);
   }
   resetForm(){
-   this.projectForm=new FormGroup({
-      projectId:new FormControl(0),
-       project:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
+  this.projectForm=new FormGroup({
+       projectId:new FormControl(0),
+       project:new FormControl('',Validators.pattern('[A-Za-z1-9]{2,20}')),
        startDate:new FormControl('',Validators.required),
        endDate:new FormControl('',Validators.required),
-       priority:new FormControl(30,Validators.pattern('[1-9]{1,20}')),
-       status:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}'))
-   }); 
+       priority:new FormControl("30",Validators.pattern('[1-9]{1,100}')),
+       //status:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
+       searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
+       manager:new FormControl({value:'',disabled:true},Validators.required),
+       userId:new FormControl('',Validators.required)
+    });
   }
 
+ 
   addProject(editFlag:boolean){
     console.log(this.projectForm.value);
-    if(!editFlag){
-    var projectManger = this.managers.find(m1=>m1.userId===this.selectedManagerId);
+     var projectManger = this.managers.find(m1=>m1.userId===this.selectedManagerId);
     console.log('addManager:'+projectManger);
     let addProject = new Project(
         this.projectForm.value.projectId,
@@ -145,6 +159,8 @@ selectedManagerId:number;
      )
     );
     console.log("addProject:"+addProject);
+   
+    if(!editFlag){
     this.projectService.addProject(addProject).subscribe(
       (responseData:Project[])=>{
         this.projects=responseData;
@@ -159,7 +175,7 @@ selectedManagerId:number;
   }else{
       //this.selectedUserId =this.userForm.value.userId;
       console.log("selectedProjectId>>");
-      this.editProject(this.projectForm.value.userId); 
+      this.editProject(this.selectedManagerId,addProject); 
       this.editFlag=false;     
     }
     //this.loadUsers();
@@ -180,8 +196,8 @@ selectedManagerId:number;
 
   }
 
-editProject(editProjectId:number){
- this.projectService.editProject(editProjectId,this.projectForm.value).subscribe(
+editProject(editProjectId:number,editPorject:Project){
+ this.projectService.editProject(editProjectId,editPorject).subscribe(
       (responseData:Project[])=>{
         this.projects=responseData;
       },
@@ -196,7 +212,7 @@ editProject(editProjectId:number){
 
  searchProject(){
    console.log("search>>"+this.projectForm.value.searchProjectName)
-  this.projectService.getProjectByName(this.projectForm.value.searchUserName).subscribe(
+  this.projectService.getProjectByName(this.projectForm.value.searchProjectName).subscribe(
       (responseData:Project[])=>{
         this.projects=responseData;
       },
