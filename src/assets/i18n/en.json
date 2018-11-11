@@ -32,5 +32,15 @@
         "NOOFTASK":"No Of Tasks:",
         "COMPLETE":"Completed",
         "PRIORITY1":"Priority"
-    }
+    },
+    "TASK":{
+        "PROJECT":"Project:",
+        "TASK":"Task:",
+        "PARENT":"Parent Task:",
+        "STARTDATE":"Start Date:",
+        "ENDDATE":"End Date:",
+        "PRIORITY":"Priority:",
+        "USER":"User:",
+        "ADDTASK":"Add Task"
+     }
 }

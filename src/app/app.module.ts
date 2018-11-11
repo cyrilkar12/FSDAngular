@@ -13,6 +13,11 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { DatePipe } from '@angular/common';
 import {UserPipe} from './pipes/UserPipe';
+import {TaskPipe} from './pipes/TaskPipe';
+import {ProjectPipe} from './pipes/ProjectPipe';
+
+import { TaskComponent } from './component/task/task.component';
+import { ViewtaskComponent } from './component/viewtask/viewtask.component';
 
 //import {AppComponent} from '.app';
 // AoT requires an exported function for factories
@@ -27,7 +32,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserComponent,
     HeaderComponent,
     ProjectComponent,
-    UserPipe
+    UserPipe,
+    ProjectPipe,
+    TaskPipe,
+    TaskComponent,
+    ViewtaskComponent
   ],
   imports: [
     BrowserModule,

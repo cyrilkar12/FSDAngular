@@ -1,0 +1,222 @@
+<br><br><br><br>
+<form class="form-horizontal" [formGroup]="taskForm" novalidate>
+
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label" for="name">{{'TASK.PROJECT'|translate}}</label>
+    </div>
+    <div class="col-sm-7" [ngClass]="{'has-error': taskForm.controls.projectName.invalid && taskForm.controls.projectName.dirty}">
+      <input type="text" formControlName="projectName" class="form-control" id="projectName" placeholder="Enter Project Name">
+    </div>
+    <div class="col-sm-1">
+           <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#projectModal" >{{'COMMON.SEARCH1'|translate}}</button>
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.projectName.invalid && taskForm.controls.projectName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+<div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label" for="name">{{'TASK.TASK'|translate}}</label>
+    </div>
+    <div class="col-sm-8" [ngClass]="{'has-error': taskForm.controls.taskName.invalid && taskForm.controls.taskName.dirty}">
+      <input type="text" formControlName="taskName" class="form-control" id="taskName" placeholder="Enter Task Name">
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.taskName.invalid && taskForm.controls.taskName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-4 col-sm-offset-6">
+      <input type="checkbox" formControlName="isParent" class="form-control" id="isParent" value="1">{{'TASK.PARENT'|translate}}
+    </div>
+    </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-7">0</div>
+    <div class="col-sm-1">30</div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label " for="name">{{'TASK.PRIORITY'|translate}}</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="range" formControlName="priority" class="form-control" id="rangePriority" min="0" max="30" data-show-value="true"
+        data-popup-enabled="true">
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.priority.invalid && taskForm.controls.priority.dirty">
+      field is invalid
+    </div>
+  </div>
+
+<div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label" for="name">{{'TASK.PARENT'|translate}}</label>
+    </div>
+    <div class="col-sm-7" [ngClass]="{'has-error': taskForm.controls.parentTaskName.invalid && taskForm.controls.parentTaskName.dirty}">
+      <input type="text" formControlName="parentTaskName" class="form-control" id="parentTaskName" placeholder="Enter Project Name">
+    </div>
+    <div class="col-sm-1">
+           <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#parentTaskModal" >{{'COMMON.SEARCH1'|translate}}</button>
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.parentTaskName.invalid && taskForm.controls.parentTaskName.dirty">
+      field is invalid
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label " for="name">{{'TASK.STARTDATE'|translate}}</label>
+    </div>
+    <div class="col-sm-2" [ngClass]="{'has-error': taskForm.controls.startDate.invalid && taskForm.controls.startDate.dirty}">
+      <input type="date" formControlName="startDate" class="form-control" id="startDate" placeholder="{{'TASK.STARTDATE'|translate}}">
+    </div>
+     <div class="col-sm-2">
+      <label class="control-label " for="name">{{'TASK.ENDDATE'|translate}}</label>
+    </div>
+    <div class="col-sm-2" [ngClass]="{'has-error': taskForm.controls.endDate.invalid && taskForm.controls.endDate.dirty}">
+      <input type="date" formControlName="endDate" class="form-control" id="endDate" placeholder="{{'TASK.ENDDATE'|translate}}"
+        (blur)="dateLessThan();">
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="((taskForm.controls.startDate.invalid && taskForm.controls.startDate.dirty) ||
+        (taskForm.controls.endDate.invalid && taskForm.controls.endDate.dirty))">
+      field is invalid
+    </div>
+  </div>
+
+
+<div class="form-group row">
+    <div class="col-sm-2">
+      <label class="control-label" for="name">{{'TASK.USER'|translate}}</label>
+    </div>
+    <div class="col-sm-7" [ngClass]="{'has-error': taskForm.controls.taskOwner.invalid && taskForm.controls.taskOwner.dirty}">
+      <input type="text" formControlName="taskOwner" class="form-control" id="taskOwner">
+    </div>
+    <div class="col-sm-1">
+           <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#userModal">{{'COMMON.SEARCH1'|translate}}</button>
+    </div>
+    <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.taskOwner.invalid && taskForm.controls.taskOwner.dirty">
+      field is invalid
+    </div>
+  </div>
+ 
+ <!-- <div class="form-group row">
+    <input type="hidden" formControlName="taskId" class="form-control" id="taskId">
+  </div>-->
+
+  <div class="form-group">
+    <div class="col-sm-offset-5 col-sm-2" *ngIf=!editFlag>
+      <button type="button" class="btn btn-default" (click)="addTask(editFlag)">{{'TASK.ADDTASK'|translate}}</button>
+      <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
+    </div>
+    <div class="col-sm-offset-5 col-sm-2" *ngIf=editFlag>
+      <button type="button" class="btn btn-default" (click)="addTask(editFlag)">{{'COMMON.EDIT'|translate}}</button>
+      <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
+    </div>
+  </div>
+</form>
+{{taskForm.controls.value | json}}
+
+
+<!-- Modal TaskOwner-->
+
+<div class="modal" id="userModal" role="dialog" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" #closeUserModal>&times;</button>
+        <h4 class="modal-title">Search Managers</h4>
+        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Filtered Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let n of taskOwners | UserPipe: queryString">
+              <td (click)="selectTaskOwners(n.userId,n.firstName+' '+n.lastName)"> {{n.firstName}}&nbsp;{{n.lastName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Project-->
+
+<div class="modal" id="projectModal" role="dialog" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" #closeProjectModal>&times;</button>
+        <h4 class="modal-title">Search Projects</h4>
+        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Filtered Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let project of projects | ProjectPipe: queryString">
+              <td (click)="selectProjectsForTask(project.projectId,project.project)"> {{project.project}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal parentTasks-->
+
+<div class="modal" id="parentTaskModal" role="dialog" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" #closeParentTaskModal>&times;</button>
+        <h4 class="modal-title">Search Parent Task</h4>
+        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+      </div>
+      <div class="modal-body">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Filtered Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pTasks of parentTasks | TaskPipe: queryString">
+              <td (click)="selectParentTask(pTasks.parentTaskId,pTasks.parentTaskName)">{{ pTasks.parentTaskName}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
