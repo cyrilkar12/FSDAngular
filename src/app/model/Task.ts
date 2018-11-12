@@ -1,6 +1,6 @@
 export class Task{
 
-    constructor(public project:Project,public taskId:number,public taskName:string,priority:number,public parentTask:ParentTask,startDate:string,endDate:string,status:string,user:User)
+    constructor(public taskId:number,public taskName:string,public priority:number,public startDate:string,public endDate:string,public status:string,public parentTask:ParentTask,public project:Project,public user:User)
     {
 
     }

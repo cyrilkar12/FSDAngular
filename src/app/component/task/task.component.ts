@@ -44,19 +44,35 @@ selectedTaskId:number;
       private userService:UserServiceService,private taskService:TaskServiceService) { 
         this.editFlag = false;
        this.display='none';
+       var today = new Date();
+      var tomorrow = today.setDate(today.getDate() + 1);
     this.taskForm=new FormGroup({
        taskId:new FormControl(0),
        projectName:new FormControl({value:'',disabled:true},Validators.required),
-       taskName:new FormControl({value:'',disabled:true},Validators.required),
+       taskName:new FormControl('',Validators.required),
        isParent:new FormControl(true),
-       priority:new FormControl(0),
+       priority:new FormControl({value:0,disabled:true}),
        parentTaskName:new FormControl({value:'',disabled:true},Validators.required),
-       startDate:new FormControl('',Validators.required),
-       endDate:new FormControl('',Validators.required),
+       startDate:new FormControl({value:this.datePipe.transform(new Date(),'y-MM-dd'),disabled:true} ,Validators.required),
+       endDate:new FormControl({value:this.datePipe.transform(tomorrow,'y-MM-dd'),disabled:true},Validators.required),
        taskOwner:new FormControl({value:'',disabled:true},Validators.required),
        userId:new FormControl('',Validators.required)
     });
+  }
+
+   dateLessThan() {
+     console.log("onblur");
+      let f = this.taskForm.value.startDate;
+      let t = this.taskForm.value.endDate;
+      console.log("from:"+f);
+      if (this.datePipe.transform(this.taskForm.value.startDate,'y-MM-dd') > 
+      this.datePipe.transform(this.taskForm.value.endDate,'y-MM-dd')) { 
+        console.log("error>>>");
+        this.taskForm.controls["startDate"].setErrors({'invalid': true});
       }
+      this.taskForm.controls["startDate"].setErrors(null);
+    
+}
 
   ngOnInit() {
     this.loadTaskOwners();
@@ -111,14 +127,33 @@ addTask(editFlag:boolean){
     if(this.taskForm.value.isParent){
       let addParentTask =  new ParentTask(0,this.taskForm.value.taskName);
       console.log("addParentTask:"+addParentTask);  
-      this.taskService.addParentTask(addParentTask);
+      this.taskService.addParentTask(addParentTask).subscribe(
+      (responseData:ParentTask[])=>{
+        this.parentTasks=responseData;
+      },
+      (error)=>{
+        console.log('error');
+        console.log(error);
+        this.responseStr = error;
+      }
+    );
     }else{
-   // console.log('addTask:'+projectManger);
+    console.log('Form vale>>>:'+this.taskForm.value.startDate);
      var taskAssignedTo = this.taskOwners.find(m1=>m1.userId===this.selectedOwnerId);
      var selectedTaskProject = this.projects.find(p1=>p1.projectId===this.selectedProjectId);
      var selectedParentTask = this.parentTasks.find(p2=>p2.parentTaskId===this.selectedParentTaskId);
-
+     console.log("selectedParentTask in addTask >>>" +selectedParentTask)
     let addTask = new Task(
+        this.taskForm.value.taskId,
+        this.taskForm.value.taskName,
+        this.taskForm.value.priority,
+        this.taskForm.value.startDate,
+        this.taskForm.value.endDate,
+        'InPrgress',
+        new ParentTask(
+          selectedParentTask.parentTaskId,
+          selectedParentTask.parentTaskName
+        ),
         new Project(
           selectedTaskProject.projectId,
           selectedTaskProject.project,
@@ -134,16 +169,6 @@ addTask(editFlag:boolean){
             taskAssignedTo.employeeId
      )
         ),
-        this.taskForm.value.taskId,
-        this.taskForm.value.taskName,
-        this.taskForm.value.priority,
-        new ParentTask(
-          this.selectedParentTaskId,
-          this.selectParentTaskName
-        ),
-        this.taskForm.value.startDate,
-        this.taskForm.value.endDate,
-        this.taskForm.value.status,
      new User(
             taskAssignedTo.userId,
             taskAssignedTo.firstName,
@@ -151,7 +176,7 @@ addTask(editFlag:boolean){
             taskAssignedTo.employeeId
      )
     );
-    console.log("addTask:"+addTask);
+    console.log("addTask>>>:"+JSON.stringify(addTask));
    
     if(!editFlag){
     this.taskService.addTask(addTask).subscribe(
@@ -191,29 +216,62 @@ editTask(selectedTaskId:number,editTask:Task){
  }
 
 resetForm(){
+   var today = new Date();
+   var tomorrow = today.setDate(today.getDate() + 1);
   this.taskForm=new FormGroup({
       taskId:new FormControl(0),
        projectName:new FormControl({value:'',disabled:true},Validators.required),
-       taskName:new FormControl({value:'',disabled:true},Validators.required),
+       taskName:new FormControl('',Validators.required),
        isParent:new FormControl(true),
        priority:new FormControl(0),
        parentTaskName:new FormControl({value:'',disabled:true},Validators.required),
-       startDate:new FormControl('',Validators.required),
-       endDate:new FormControl('',Validators.required),
+       startDate:new FormControl(this.datePipe.transform(new Date(),'y-MM-dd') ,Validators.required),
+       endDate:new FormControl(this.datePipe.transform(tomorrow,'y-MM-dd'),Validators.required),
        taskOwner:new FormControl({value:'',disabled:true},Validators.required),
        userId:new FormControl('',Validators.required)
     });
   }
 
-selectParentTask(){
+selectParentTask(parentTaskId:number,parentTaskName:string){
+  console.log("selectParentTask>>>"+parentTaskId);
+  this.selectedParentTaskId = parentTaskId;
+  this.taskForm.patchValue({
+    'parentTaskName':parentTaskName
+   });
+    this.closeParentTaskModal.nativeElement.click();
+
 }
 
-selectTaskOwners(){
+selectTaskOwners(userId:number,taskOwnerName:string){
+  this.selectedOwnerId= userId;
+  this.taskForm.patchValue({
+    'taskOwner':taskOwnerName
+   });
+     this.closeUserModal.nativeElement.click();
 
 }
 
-selectProjectsForTask(){
+selectProjectsForTask(projectId:number,projectName:string){
+  this.selectedProjectId = projectId;
+  console.log("selected projectName"+projectName);
+  this.taskForm.patchValue({
+    'projectName':projectName
+   });
+     this.closeProjectModal.nativeElement.click();
 
+}
+
+checkBoxClicked() {
+  console.log("clicked");
+ if(!this.taskForm.controls["isParent"].value) {
+   this.taskForm.controls["priority"].disable();
+   this.taskForm.controls["startDate"].disable();
+   this.taskForm.controls["endDate"].disable();
+ }else {
+   this.taskForm.controls["priority"].enable();
+   this.taskForm.controls["startDate"].enable();
+   this.taskForm.controls["endDate"].enable();
+ }
 }
 
 }

@@ -36,11 +36,24 @@
     "TASK":{
         "PROJECT":"Project:",
         "TASK":"Task:",
-        "PARENT":"Parent Task:",
+        "PARENT":"Parent Task",
         "STARTDATE":"Start Date:",
         "ENDDATE":"End Date:",
         "PRIORITY":"Priority:",
         "USER":"User:",
         "ADDTASK":"Add Task"
+     },
+     "VIEWTASK":{
+        "SORT":"Sort Task By:",
+        "STARTDATE":"Start Date",
+        "ENDDATE":"End Date",
+        "PRIORITY1":"Priority",
+        "COMPLETE":"Completed",
+        "TASK":"Task",
+        "PARENT":"Parent",
+        "PRIORITY":"Priority",
+        "START":"Start",
+        "END":"End",
+        "ENDTASK":"End Task"
      }
 }
