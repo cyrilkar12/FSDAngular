@@ -9,7 +9,7 @@ export class Task{
 export class ParentTask{
 
 
-    constructor(parentId:number,parentTask:string)
+    constructor(parentId:number,parentTaskName:string)
     {
 
     }

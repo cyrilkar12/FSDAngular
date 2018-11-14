@@ -26,24 +26,28 @@ responseStr:string;
 viewTaskForm:FormGroup;
 //searchTaskName:number;
 selectedProjectId:number;
+queryString:string;
 
   constructor(private datePipe: DatePipe,private taskService:TaskServiceService,
           private projectService:ProjectService) { 
             this.viewTaskForm=new FormGroup({
               projectName:new FormControl('')
             });
+            this.queryString = '';
    }
 
 
   ngOnInit() {
     this.loadTasks();
     this.loadProjects();
+    
   }
 
  loadTasks(){
    this.taskService.getTasks().subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
+         console.log('parentTasks>>>'+JSON.stringify(this.tasks));
       },
       (error)=>{
         console.log('error');
@@ -51,7 +55,7 @@ selectedProjectId:number;
         this.responseStr = error;
       }
     );
-    console.log('parentTasks>>>'+this.tasks);
+   
  }
 
  loadProjects(){
@@ -69,9 +73,9 @@ this.projectService.getProjects().subscribe(
 }
 
 
-searchByTaskName(searchTaskName:string){
- console.log("search>>"+searchTaskName)
-  this.taskService.getTaskByName(searchTaskName).subscribe(
+searchTasksByProject(searchProject:number){
+ console.log("search>>"+searchProject)
+  this.taskService.getTaskByProjectId(searchProject).subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
       },
@@ -100,6 +104,7 @@ sortTasks(sortType:number){
 endTask(taskId:number){
    console.log(taskId);
   var selectedTask = this.tasks.find(p2=>p2.taskId===taskId);
+  selectedTask.status = 'Completed';
   this.taskService.editTask(selectedTask.taskId,selectedTask).subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
@@ -119,7 +124,14 @@ selectProjectsForTask(projectId:number,projectName:string){
     'projectName':projectName
    });
      this.closeProjectModal.nativeElement.click();
+     this.searchTasksByProject(projectId);
+}
 
+loadAllTasks(){
+  if(this.viewTaskForm.value.projectName===null || 
+        this.viewTaskForm.value.projectName===''){
+          this.loadTasks();
+        }
 }
 
 }

@@ -2,8 +2,17 @@ hr.style3 {
 	border-top: 1px dashed #8c8b8b;
 }
 
+.my-header{
+  margin: 5px 5px;  
+}
 .my-background {
   background: #f99;
+  overflow-wrap:break-word;
+  }
+
+#pad{
+    padding-top:10px;
+    padding-bottom:20px;
 }
 
 body {

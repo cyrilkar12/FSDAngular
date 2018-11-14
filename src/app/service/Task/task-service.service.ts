@@ -43,7 +43,7 @@ addParentTask(parenttask:ParentTask):Observable<any>{
   editTask(selectedTaskId:number,task:Task):Observable<any>{
     console.log('edit method>>>');
     console.log(JSON.stringify(task));
-   return this.httpClient.post('http://localhost:9090/task/editTask/'+selectedTaskId,JSON.stringify(task),httpOptions);
+   return this.httpClient.put('http://localhost:9090/task/editTask/'+selectedTaskId,JSON.stringify(task),httpOptions);
   }
 
   getTaskByName(taskName:String):Observable<any>{
@@ -51,6 +51,9 @@ addParentTask(parenttask:ParentTask):Observable<any>{
    return this.httpClient.get('http://localhost:9090/task/searchTask?taskName='+taskName);
   }
    
+   getTaskByProjectId(projectId:number):Observable<any>{
+     return this.httpClient.get('http://localhost:9090/task/searchTask?projectId='+projectId);
+   }
    sortTasks(sortType:number):Observable<any>{
    return this.httpClient.get('http://localhost:9090/task/sortTasks/'+sortType);
   }

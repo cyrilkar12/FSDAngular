@@ -40,6 +40,7 @@ selectedParentTaskId:number;
 selectParentTaskName:string;
 selectedTaskId:number;
 
+
   constructor(private projectService:ProjectService,private datePipe: DatePipe,
       private userService:UserServiceService,private taskService:TaskServiceService) { 
         this.editFlag = false;
@@ -71,8 +72,7 @@ selectedTaskId:number;
         this.taskForm.controls["startDate"].setErrors({'invalid': true});
       }
       this.taskForm.controls["startDate"].setErrors(null);
-    
-}
+ }
 
   ngOnInit() {
     this.loadTaskOwners();
@@ -142,6 +142,12 @@ addTask(editFlag:boolean){
      var taskAssignedTo = this.taskOwners.find(m1=>m1.userId===this.selectedOwnerId);
      var selectedTaskProject = this.projects.find(p1=>p1.projectId===this.selectedProjectId);
      var selectedParentTask = this.parentTasks.find(p2=>p2.parentTaskId===this.selectedParentTaskId);
+     var parentId = null;
+     var parentTaskName =null;
+     if(selectedParentTask!=null && selectedParentTask!=undefined){
+        parentId = selectedParentTask.parentTaskId;
+        parentTaskName = selectedParentTask.parentTaskName;
+      }
      console.log("selectedParentTask in addTask >>>" +selectedParentTask)
     let addTask = new Task(
         this.taskForm.value.taskId,
@@ -151,8 +157,8 @@ addTask(editFlag:boolean){
         this.taskForm.value.endDate,
         'InPrgress',
         new ParentTask(
-          selectedParentTask.parentTaskId,
-          selectedParentTask.parentTaskName
+          parentId,
+          parentTaskName
         ),
         new Project(
           selectedTaskProject.projectId,
