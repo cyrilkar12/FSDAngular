@@ -18,6 +18,7 @@ import {ProjectPipe} from './pipes/ProjectPipe';
 
 import { TaskComponent } from './component/task/task.component';
 import { ViewtaskComponent } from './component/viewtask/viewtask.component';
+import {ActivatedRoute, ParamMap} from "@angular/router";
 
 //import {AppComponent} from '.app';
 // AoT requires an exported function for factories

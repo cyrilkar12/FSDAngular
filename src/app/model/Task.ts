@@ -8,8 +8,7 @@ export class Task{
 
 export class ParentTask{
 
-
-    constructor(parentId:number,parentTaskName:string)
+    constructor(public parentTaskId:number,public parentTaskName:string)
     {
 
     }

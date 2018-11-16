@@ -20,9 +20,9 @@ editFlag:boolean;
     this.editFlag = false;
     this.userForm=new FormGroup({
        userId:new FormControl(0),
-       firstName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       lastName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       employeeId:new FormControl(1,Validators.pattern('[1-9]{1,20}')),
+       firstName:new FormControl('',[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       lastName:new FormControl('',[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       employeeId:new FormControl(1,[Validators.required,Validators.pattern('[1-9]{1,20}')]),
        searchUserName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}'))
     });
  //   this.searchUserName='';
@@ -37,9 +37,9 @@ editFlag:boolean;
     var editUser = this.users.find(u1=>u1.userId===userId);
     this.userForm=new FormGroup({
        userId:new FormControl(editUser.userId),
-       firstName:new FormControl(editUser.firstName,Validators.pattern('[A-Za-z]{2,20}')),
-       lastName:new FormControl(editUser.lastName,Validators.pattern('[A-Za-z]{2,20}')),
-       employeeId:new FormControl(editUser.employeeId,Validators.pattern('[1-9]{1,20}')),
+       firstName:new FormControl(editUser.firstName,[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       lastName:new FormControl(editUser.lastName,[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       employeeId:new FormControl(editUser.employeeId,[Validators.required,Validators.pattern('[1-9]{1,20}')]),
        searchUserName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}'))
     });
   }
@@ -59,15 +59,18 @@ editFlag:boolean;
   resetForm(){
    this.userForm=new FormGroup({
        userId:new FormControl(0),
-       firstName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       lastName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       employeeId:new FormControl(1,Validators.pattern('[1-9]{1,20}')),
+       firstName:new FormControl('',[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       lastName:new FormControl('',[Validators.required,Validators.pattern('[A-Za-z]{2,20}')]),
+       employeeId:new FormControl(1,[Validators.required,Validators.pattern('[1-9]{1,20}')]),
        searchUserName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}'))
    }); 
   }
 
   addUser(editFlag:boolean){
     console.log(this.userForm);
+    if(!this.userForm.valid){
+      return;
+    }
     if(!editFlag){
     this.userService.insertUser(this.userForm.value).subscribe(
       (responseData:User[])=>{

@@ -61,7 +61,7 @@
           {{task.endDate|date:short}}
         </div>
         <div class="col-sm-1">
-          <button type="button" (click)="endTask(task.taskId)" class="btn btn-default">{{'COMMON.UPDATE'|translate}}</button>
+          <button type="button" [routerLink]="['../editTask/',task.taskId]" class="btn btn-default">{{'COMMON.UPDATE'|translate}}</button>
           <br>
           <button type="button" (click)="endTask(task.taskId)" class="btn btn-default">{{'VIEWTASK.ENDTASK'|translate}}</button>
         </div>

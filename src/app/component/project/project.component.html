@@ -1,15 +1,15 @@
 <br>
 <br><br><br><br>
-<form class="form-horizontal" [formGroup]="projectForm" novalidate>
+<form class="form-horizontal" [formGroup]="projectForm" validate>
 
   <div class="form-group row">
     <div class="col-sm-2">
     <label class="control-label" for="name">{{'PROJECT.PROJECT'|translate}}</label>
     </div>
-    <div class="col-sm-8" [ngClass]="{'has-error': projectForm.controls.project.invalid && projectForm.controls.project.dirty}">
+    <div class="col-sm-8" [ngClass]="{'has-error': projectForm.controls.project.invalid && (projectForm.controls.project.dirty||projectForm.controls.project.touched) }">
       <input type="text" formControlName="project" class="form-control" id="project" placeholder="Enter Project Name">
     </div>
-    <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.project.invalid && projectForm.controls.project.dirty">
+    <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.project.invalid && (projectForm.controls.project.dirty||projectForm.controls.project.touched)">
       field is invalid
     </div>
   </div>
@@ -17,17 +17,17 @@
   <div class="form-group row">
     <div class="col-sm-2">
     </div>
-    <div class="col-sm-4">
-    <input type="checkbox" id="dateCheckbox" value="1">{{'PROJECT.DATECONT'|translate}}
+    <div class="col-sm-2">
+    <input type="checkbox" formControlName="dateCheckbox"  id="dateCheckbox" (click)="checkBoxClicked();" >{{'PROJECT.DATECONT'|translate}}
     </div>
-    <div class="col-sm-2" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
+    <div class="col-sm-3" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && (projectForm.controls.startDate.dirty||projectForm.controls.startDate.touched)}">
       <input type="date" formControlName="startDate" class="form-control" id="startDate" placeholder="{{'PROJECT.STARTDATE'|translate}}">
       </div>
-         <div class="col-sm-2" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
+         <div class="col-sm-3" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
       <input type="date" formControlName="endDate" class="form-control" id="endDate"
          placeholder="{{'PROJECT.ENDDATE'|translate}}" (blur)="dateLessThan();">
     </div>
-    <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty">
+    <div class="alert-danger col-sm-1" *ngIf="projectForm.controls.startDate.invalid && (projectForm.controls.startDate.dirty||projectForm.controls.startDate.touched)">
       field is invalid
     </div>
   </div>
@@ -61,12 +61,12 @@
     </div>
   </div>
 
-  {{display}}
+  
   <div class="form-group row">
     <div class="col-sm-2">
     <label class="control-label" for="name">{{'PROJECT.MANAGER'|translate}}</label>
     </div>
-    <div class="col-sm-8" [ngClass]="{'has-error': projectForm.controls.manager.invalid  && projectForm.controls.manager.dirty}">
+    <div  [ngClass]="{'has-error': projectForm.controls.manager.invalid  && projectForm.controls.manager.dirty}">
      <div class="col-sm-7">
       <input type="text" formControlName="manager" class="form-control" id="manager" placeholder="{{'PROJECT.MANAGER'|translate}}">
       </div>
@@ -108,12 +108,12 @@
   <hr class="style5">
   <br>
   <div class="form-group row">
-    <div class="col-sm-12">
-      <div class="col-sm-4">
+    <div >
+      <div class="col-sm-6">
         <input type="text" formControlName="searchProjectName" class="form-control" id="searchProjectName" placeholder="{{'COMMON.SEARCH'|translate}}"
           (keydown.enter)="searchProject()">
       </div>
-      <div class="col-sm-8">Sort:
+      <div class="col-sm-6">Sort:
         <button type="button" (click)="sortProject(1)" class="btn btn-default">{{'PROJECT.STARTDATE'|translate}}</button>
         <button type="button" (click)="sortProject(2)" class="btn btn-default">{{'PROJECT.ENDDATE'|translate}}</button>
         <button type="button" (click)="sortProject(3)" class="btn btn-default">{{'PROJECT.PRIORITY1'|translate}}</button>

@@ -37,31 +37,48 @@ selectedManagerId:number;
        this.display='none';
     this.projectForm=new FormGroup({
        projectId:new FormControl(0),
-       project:new FormControl('',Validators.pattern('[A-Za-z1-9]{2,20}')),
-       startDate:new FormControl('',Validators.required),
-       endDate:new FormControl('',Validators.required),
-       priority:new FormControl("30",Validators.pattern('[1-9]{1,100}')),
+       project:new FormControl('',[Validators.required,Validators.pattern('[A-Za-z1-9]{2,20}')]),
+       startDate:new FormControl(''),
+       endDate:new FormControl(''),
+       priority:new FormControl("0",Validators.pattern('[1-9]{1,100}')),
        //status:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
+       searchProjectName:new FormControl(''),
        manager:new FormControl({value:'',disabled:true},Validators.required),
-       userId:new FormControl('',Validators.required)
+       userId:new FormControl(''),
+       dateCheckbox:new FormControl(true)
     });
 
    }
+
+    checkBoxClicked() {
+    console.log("clicked");
+    if (this.projectForm.controls["dateCheckbox"]!=undefined && 
+        this.projectForm.controls["dateCheckbox"].value) {
+      this.projectForm.controls["endDate"].disable();
+      this.projectForm.controls["startDate"].disable();
+    } else {
+      this.projectForm.controls["endDate"].enable();
+      this.projectForm.controls["startDate"].enable();
+     }
+  }
 
    dateLessThan() {
      console.log("onblur");
       let f = this.projectForm.value.startDate;
       let t = this.projectForm.value.endDate;
       console.log("from:"+f);
+      //if((f!=null && (t==null || t==undefined )) || ( t!=null && (f==null || f==undefined ))
+      if(!this.projectForm.controls["dateCheckbox"].value && (t==null || t==undefined ||f==null || f==undefined )){
+        this.projectForm.controls["startDate"].setErrors({'invalid': true});
+      }
       if (this.datePipe.transform(this.projectForm.value.startDate,'y-MM-dd') > 
       this.datePipe.transform(this.projectForm.value.endDate,'y-MM-dd')) { 
         console.log("error>>>");
         this.projectForm.controls["startDate"].setErrors({'invalid': true});
+      }else{
+          this.projectForm.controls["startDate"].setErrors(null);
       }
-      this.projectForm.controls["startDate"].setErrors(null);
-    
-}
+    }
   
 
   ngOnInit() {
@@ -103,7 +120,8 @@ selectedManagerId:number;
        priority:new FormControl(editProject.priority),
        manager:new FormControl({value:editmanagerName,disabled:true},Validators.required),
         searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
-       userId:new FormControl('',Validators.required)
+       userId:new FormControl(''),
+        dateCheckbox:new FormControl(true)
        //status:new FormControl(editProject.status),
     });
     /*this.projectForm.patchValue({
@@ -128,21 +146,47 @@ selectedManagerId:number;
   this.projectForm=new FormGroup({
        projectId:new FormControl(0),
        project:new FormControl('',Validators.pattern('[A-Za-z1-9]{2,20}')),
-       startDate:new FormControl('',Validators.required),
-       endDate:new FormControl('',Validators.required),
-       priority:new FormControl("30",Validators.pattern('[1-9]{1,100}')),
+       startDate:new FormControl(''),
+       endDate:new FormControl(''),
+       priority:new FormControl("0"),
        //status:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
        searchProjectName:new FormControl('',Validators.pattern('[A-Za-z]{2,20}')),
        manager:new FormControl({value:'',disabled:true},Validators.required),
-       userId:new FormControl('',Validators.required)
+       userId:new FormControl('')
     });
   }
 
+public findInvalidControls() {
+    const invalid = [];
+    const controls = this.projectForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    console.log("invalid>>>>>"+invalid)
+    return invalid;
+    
+}
  
   addProject(editFlag:boolean){
     console.log(this.projectForm.value);
+    this.dateLessThan();
+    console.log(this.projectForm.invalid);
+    this.findInvalidControls();
+    if(this.projectForm.controls["startDate"].invalid || this.projectForm.invalid){
+      return;
+    }
      var projectManger = this.managers.find(m1=>m1.userId===this.selectedManagerId);
     console.log('addManager:'+projectManger);
+    var startDateJson=null;
+    var endDateJson=null;
+    if(this.projectForm.value.startDate!=null && this.projectForm.value.startDate!=undefined){
+      startDateJson = this.projectForm.value.startDate;
+    }
+    if(this.projectForm.value.endDate!=null && this.projectForm.value.endDate!=undefined){
+      endDateJson= this.projectForm.value.endDate;
+    }
     let addProject = new Project(
         this.projectForm.value.projectId,
         this.projectForm.value.project,

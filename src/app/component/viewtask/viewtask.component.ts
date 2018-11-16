@@ -27,6 +27,7 @@ viewTaskForm:FormGroup;
 //searchTaskName:number;
 selectedProjectId:number;
 queryString:string;
+message:string;
 
   constructor(private datePipe: DatePipe,private taskService:TaskServiceService,
           private projectService:ProjectService) { 
@@ -106,8 +107,8 @@ endTask(taskId:number){
   var selectedTask = this.tasks.find(p2=>p2.taskId===taskId);
   selectedTask.status = 'Completed';
   this.taskService.editTask(selectedTask.taskId,selectedTask).subscribe(
-      (responseData:Task[])=>{
-        this.tasks=responseData;
+      (responseData:string)=>{
+        this.message=responseData;
       },
       (error)=>{
         console.log('error');

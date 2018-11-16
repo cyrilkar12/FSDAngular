@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import {ParentTask} from '../../model/ParentTask';
 import {Task} from '../../model/Task';
 import { HttpHeaders } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -16,7 +17,11 @@ const httpOptions = {
 })
 export class TaskServiceService {
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient:HttpClient,private translateService: TranslateService) {
+    httpOptions.headers =
+  httpOptions.headers.set('Accept-Language', this.translateService.currentLang);
+  console.log("lang>>>"+ this.translateService.currentLang);
+   }
 
  getTasks():Observable<any>{
    let observables=this.httpClient.get('http://localhost:9090/task/viewTasks/')
@@ -54,6 +59,11 @@ addParentTask(parenttask:ParentTask):Observable<any>{
    getTaskByProjectId(projectId:number):Observable<any>{
      return this.httpClient.get('http://localhost:9090/task/searchTask?projectId='+projectId);
    }
+
+    getTaskByTaskId(taskId:string):Observable<any>{
+     return this.httpClient.get('http://localhost:9090/task/getTask/'+taskId);
+   }
+
    sortTasks(sortType:number):Observable<any>{
    return this.httpClient.get('http://localhost:9090/task/sortTasks/'+sortType);
   }

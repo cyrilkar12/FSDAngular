@@ -4,20 +4,20 @@
 
   <div class="form-group row">
     <label class="control-label col-sm-2" for="name">{{'USER.FIRSTNAME'|translate}}</label>
-    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.firstName.invalid && userForm.controls.firstName.dirty}">
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.firstName.invalid && (userForm.controls.firstName.dirty||userForm.controls.firstName.touched)}">
       <input type="firstName" formControlName="firstName" class="form-control" id="firstName" placeholder="Enter  First Name">
     </div>
-    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.firstName.invalid && userForm.controls.firstName.dirty">
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.firstName.invalid && (userForm.controls.firstName.dirty||userForm.controls.firstName.touched)">
       field is invalid
     </div>
   </div>
 
   <div class="form-group row">
     <label class="control-label col-sm-2" for="name">{{'USER.LASTNAME'|translate}}</label>
-    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.lastName.invalid && userForm.controls.lastName.dirty}">
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.lastName.invalid && (userForm.controls.lastName.dirty||userForm.controls.lastName.touched)}">
       <input type="text" formControlName="lastName" class="form-control" id="lastName" placeholder="Enter  Last Name">
     </div>
-    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.lastName.invalid && userForm.controls.lastName.dirty">
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.lastName.invalid && (userForm.controls.lastName.dirty||userForm.controls.lastName.touched)">
       field is invalid
     </div>
   </div>
@@ -25,10 +25,10 @@
 
   <div class="form-group row">
     <label class="control-label col-sm-2" for="name">{{'USER.EMPID'|translate}}</label>
-    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.employeeId.invalid && userForm.controls.employeeId.dirty}">
+    <div class="col-sm-5" [ngClass]="{'has-error': userForm.controls.employeeId.invalid && (userForm.controls.employeeId.dirty||userForm.controls.employeeId.touched)}">
       <input type="employeeId" formControlName="employeeId" class="form-control" id="employeeId" placeholder="Enter  employeeId">
     </div>
-    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.employeeId.invalid && userForm.controls.employeeId.dirty">
+    <div class="alert-danger col-sm-4" *ngIf="userForm.controls.employeeId.invalid && (userForm.controls.employeeId.dirty||userForm.controls.employeeId.touched)">
       field is invalid
     </div>
   </div>
