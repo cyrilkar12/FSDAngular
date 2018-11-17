@@ -24,48 +24,48 @@ export class TaskServiceService {
    }
 
  getTasks():Observable<any>{
-   let observables=this.httpClient.get('http://localhost:9090/task/viewTasks/')
+   let observables=this.httpClient.get('http://localhost:9090/FSDFinal/task/viewTasks/')
     return observables
   }
 
    getParentTasks():Observable<any>{
-   let observables=this.httpClient.get('http://localhost:9090/task/viewParentTasks/')
+   let observables=this.httpClient.get('http://localhost:9090/FSDFinal/task/viewParentTasks/')
     return observables
   }
 
   addTask(task:Task):Observable<any>{
     console.log('insert method>>>');
     console.log(JSON.stringify(task));
-   return this.httpClient.post('http://localhost:9090/task/addTask',JSON.stringify(task),httpOptions);
+   return this.httpClient.post('http://localhost:9090/FSDFinal/task/addTask',JSON.stringify(task),httpOptions);
   }
 
 addParentTask(parenttask:ParentTask):Observable<any>{
     console.log('parenttask insert method>>>');
     console.log(JSON.stringify(parenttask));
-   return this.httpClient.post('http://localhost:9090/task/addParentTask',JSON.stringify(parenttask),httpOptions);
+   return this.httpClient.post('http://localhost:9090/FSDFinal/task/addParentTask',JSON.stringify(parenttask),httpOptions);
   }
 
   editTask(selectedTaskId:number,task:Task):Observable<any>{
     console.log('edit method>>>');
     console.log(JSON.stringify(task));
-   return this.httpClient.put('http://localhost:9090/task/editTask/'+selectedTaskId,JSON.stringify(task),httpOptions);
+   return this.httpClient.put('http://localhost:9090/FSDFinal/task/editTask/'+selectedTaskId,JSON.stringify(task),httpOptions);
   }
 
   getTaskByName(taskName:String):Observable<any>{
     console.log("taskName"+taskName);
-   return this.httpClient.get('http://localhost:9090/task/searchTask?taskName='+taskName);
+   return this.httpClient.get('http://localhost:9090/FSDFinal/task/searchTask?taskName='+taskName);
   }
    
    getTaskByProjectId(projectId:number):Observable<any>{
-     return this.httpClient.get('http://localhost:9090/task/searchTask?projectId='+projectId);
+     return this.httpClient.get('http://localhost:9090/FSDFinal/task/searchTask?projectId='+projectId);
    }
 
     getTaskByTaskId(taskId:string):Observable<any>{
-     return this.httpClient.get('http://localhost:9090/task/getTask/'+taskId);
+     return this.httpClient.get('http://localhost:9090/FSDFinal/task/getTask/'+taskId);
    }
 
    sortTasks(sortType:number):Observable<any>{
-   return this.httpClient.get('http://localhost:9090/task/sortTasks/'+sortType);
+   return this.httpClient.get('http://localhost:9090/FSDFinal/task/sortTasks/'+sortType);
   }
 
 }

@@ -17,32 +17,32 @@ export class UserServiceService {
   constructor(private httpClient:HttpClient) { }
 
    getUsers():Observable<any>{
-   let observables=this.httpClient.get('http://localhost:9090/user/viewUsers/')
+   let observables=this.httpClient.get('http://localhost:9090/FSDFinal/user/viewUsers/')
     return observables
   }
 
   insertUser(user:User):Observable<any>{
     console.log('insert method>>>');
     console.log(JSON.stringify(user));
-   return this.httpClient.post('http://localhost:9090/user/addUser',JSON.stringify(user),httpOptions);
+   return this.httpClient.post('http://localhost:9090/FSDFinal/user/addUser',JSON.stringify(user),httpOptions);
   }
 
   deleteUser(userId:number):Observable<any>{
-   return this.httpClient.delete('http://localhost:9090/user/deleteUser/'+userId)
+   return this.httpClient.delete('http://localhost:9090/FSDFinal/user/deleteUser/'+userId)
   }
 
  editUser(userId:number,user:User):Observable<any>{
     console.log(JSON.stringify(user));
-   return this.httpClient.put('http://localhost:9090/user/editUser/'+userId,
+   return this.httpClient.put('http://localhost:9090/FSDFinal/user/editUser/'+userId,
    user,httpOptions );
   }
 
   getUserByName(userName:String):Observable<any>{
-   return this.httpClient.get('http://localhost:9090/user/searchUser?userName='+userName);
+   return this.httpClient.get('http://localhost:9090/FSDFinal/user/searchUser?userName='+userName);
   }
    
    sortUsers(sortType:number):Observable<any>{
-   return this.httpClient.get('http://localhost:9090/user/sortUsers/'+sortType);
+   return this.httpClient.get('http://localhost:9090/FSDFinal/user/sortUsers/'+sortType);
   }
 
   

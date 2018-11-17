@@ -7,7 +7,6 @@ import {User} from '../../model/User';
 import { Validators } from '@angular/forms';
 import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 import { DatePipe } from '@angular/common';
-
 //import { TranslateService } from '@ngx-translate/core';
 
 
@@ -30,6 +29,7 @@ editFlag:boolean;
 display:string
 selectedManager:string;
 selectedManagerId:number;
+queryString:string
 
   constructor(private projectService:ProjectService,private datePipe: DatePipe,
       private userService:UserServiceService) {

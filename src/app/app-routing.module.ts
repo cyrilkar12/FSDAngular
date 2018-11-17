@@ -7,12 +7,12 @@ import {TaskComponent} from './component/task/task.component';
 import {ViewtaskComponent} from './component/viewtask/viewtask.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'users', pathMatch: 'full' },
-  { path: 'users', component: UserComponent },
-   { path: 'projects', component: ProjectComponent },
-    { path: 'tasks', component: TaskComponent },
-    { path: 'viewtasks', component: ViewtaskComponent },
-    { path: 'editTask/:id', component: TaskComponent }
+  { path: '', redirectTo: 'ProjectManager/users', pathMatch: 'full' },
+  { path: 'ProjectManager/users', component: UserComponent },
+   { path: 'ProjectManager/projects', component: ProjectComponent },
+    { path: 'ProjectManager/tasks', component: TaskComponent },
+    { path: 'ProjectManager/viewtasks', component: ViewtaskComponent },
+    { path: 'ProjectManager/editTask/:id', component: TaskComponent }
   /*{ path: 'insert', component: AppComponent },
   { path: 'modify/:id', component: AppComponent },
   { path: 'delete/:id', component: AppComponent },

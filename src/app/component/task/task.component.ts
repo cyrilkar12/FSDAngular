@@ -43,7 +43,7 @@ export class TaskComponent implements OnInit {
   editTaskId: string;
   editLoadtask: Task;
   message:string;
-
+queryString:string;
   constructor(private projectService: ProjectService, private datePipe: DatePipe,
     private userService: UserServiceService, private taskService: TaskServiceService,
     private activatedRoute: ActivatedRoute) {
