@@ -10,6 +10,7 @@ import {User} from '../../model/User';
 import { Validators } from '@angular/forms';
 import { OuterSubscriber } from 'rxjs/internal/OuterSubscriber';
 import { DatePipe } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-viewtask',
@@ -30,7 +31,7 @@ queryString:string;
 message:string;
 
   constructor(private datePipe: DatePipe,private taskService:TaskServiceService,
-          private projectService:ProjectService) { 
+          private projectService:ProjectService,private translate:TranslateService) { 
             this.viewTaskForm=new FormGroup({
               projectName:new FormControl('')
             });
@@ -48,11 +49,11 @@ message:string;
    this.taskService.getTasks().subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
-         console.log('parentTasks>>>'+JSON.stringify(this.tasks));
+         //console.log('parentTasks>>>'+JSON.stringify(this.tasks));
       },
       (error)=>{
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
         this.responseStr = error;
       }
     );
@@ -65,62 +66,70 @@ this.projectService.getProjects().subscribe(
         this.projects=responseData;
       },
       (error)=>{
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
         this.responseStr = error;
       }
     );
-    console.log('projects>>>'+this.projects);
+    //console.log('projects>>>'+this.projects);
 }
 
 
 searchTasksByProject(searchProject:number){
- console.log("search>>"+searchProject)
+ //console.log("search>>"+searchProject)
+ this.message='';
   this.taskService.getTaskByProjectId(searchProject).subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
       },
       (error)=>{
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
         this.responseStr = error;
       }
     );
 }
 
 sortTasks(sortType:number){
-   console.log(sortType);
+  this.message='';
+   //console.log(sortType);
   this.taskService.sortTasks(sortType).subscribe(
       (responseData:Task[])=>{
         this.tasks=responseData;
       },
       (error)=>{
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
         this.responseStr = error;
       }
     );
  }
 
 endTask(taskId:number){
-   console.log(taskId);
+  this.message='';
+   //console.log(taskId);
   var selectedTask = this.tasks.find(p2=>p2.taskId===taskId);
   selectedTask.status = 'Completed';
   this.taskService.editTask(selectedTask.taskId,selectedTask).subscribe(
       (responseData:string)=>{
         this.message=responseData;
+        this.translate.get('MESSAGES.TASKCOMP').subscribe(
+      (responseData:string)=>{
+        this.message=responseData;
+      });
       },
       (error)=>{
-        console.log('error');
-        console.log(error);
+        //console.log('error');
+        //console.log(error);
         this.responseStr = error;
       }
     );
 }
 
 selectProjectsForTask(projectId:number,projectName:string){
+  this.message='';
   this.selectedProjectId = projectId;
-  console.log("selected projectName"+projectName);
+  //console.log("selected projectName"+projectName);
   this.viewTaskForm.patchValue({
     'projectName':projectName
    });

@@ -1,5 +1,6 @@
 <br>
 <br><br><br><br>
+<div *ngIf="message" class="alert alert-danger" [innerHTML]="message"></div>
 <form class="form-horizontal" [formGroup]="userForm" (ngSubmit)="addUser(editFlag)" novalidate>
 
   <div class="form-group row">
@@ -38,11 +39,11 @@
   </div>
 
   <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-2" *ngIf=!editFlag> 
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=!editFlag>
       <button type="button" class="btn btn-default" (click)="addUser(editFlag)">{{'COMMON.ADD'|translate}}</button>
     </div>
-    <div class="col-sm-offset-3 col-sm-2" *ngIf=editFlag> 
-      <button type="button" class="btn btn-default"  (click)="addUser(editFlag)">{{'COMMON.EDIT'|translate}}</button>
+    <div class="col-sm-offset-3 col-sm-2" *ngIf=editFlag>
+      <button type="button" class="btn btn-default" (click)="addUser(editFlag)">{{'COMMON.EDIT'|translate}}</button>
     </div>
     <div class="col-sm-2">
       <button type="reset" (click)="resetForm()" class="btn btn-default">{{'COMMON.RESET'|translate}}</button>
@@ -55,7 +56,7 @@
     <div class="col-sm-12">
       <div class="col-sm-4">
         <input type="text" formControlName="searchUserName" class="form-control" id="searchUserName" placeholder="{{'COMMON.SEARCH'|translate}}"
-        (keydown.enter)="searchUser()">
+          (keydown.enter)="searchUser()">
       </div>
       <div class="col-sm-8">Sort:
         <button type="button" (click)="sortUser(1)" class="btn btn-default">{{'USER.FIRSTNAME'|translate}}</button>
@@ -78,7 +79,7 @@
   <div *ngFor="let user of users">
     <div class="row col-sm-12">
       <div class="col-sm-4 my-background">
-       {{'USER.FIRSTNAME'|translate}}
+        {{'USER.FIRSTNAME'|translate}}
       </div>
       <div class="col-sm-4 my-background">
         {{user.firstName}}
@@ -107,9 +108,12 @@
         {{user.employeeId}}
       </div>
       <br>
-  <hr class="style5">
-  <br>
+      <hr class="style5">
+      <br>
     </div>
 
   </div>
+</div>
+<div class="alert alert-danger" *ngIf="users?.length == 0">
+  {{'MESSAGES.EMPTY'|translate}}
 </div>

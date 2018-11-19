@@ -1,6 +1,5 @@
 <br><br><br><br>
-<div *ngIf="message" class="success">{{message}}</div>
-
+<div *ngIf="message" class="alert alert-danger" [innerHTML]="message"></div>
 <form class="form-horizontal" [formGroup]="taskForm" validate>
 
   <div class="form-group row">
@@ -11,19 +10,19 @@
       <input type="text" formControlName="projectName" class="form-control" id="projectName" placeholder="Enter Project Name">
     </div>
     <div class="col-sm-1" *ngIf="editFlag===false">
-           <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#projectModal" >{{'COMMON.SEARCH1'|translate}}</button>
+      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#projectModal">{{'COMMON.SEARCH1'|translate}}</button>
     </div>
     <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.projectName.invalid && taskForm.controls.projectName.dirty">
       field is invalid
     </div>
   </div>
 
-<div class="form-group row">
+  <div class="form-group row">
     <div class="col-sm-2">
       <label class="control-label" for="name">{{'TASK.TASK'|translate}}</label>
     </div>
     <div class="col-sm-8" [ngClass]="{'has-error': taskForm.controls.taskName.invalid && (taskForm.controls.taskName.dirty||taskForm.controls.taskName.touched)}">
-      <input type="text"  formControlName="taskName" class="form-control" id="taskName" placeholder="Enter Task Name">
+      <input type="text" formControlName="taskName" class="form-control" id="taskName" placeholder="Enter Task Name">
     </div>
     <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.taskName.invalid && (taskForm.controls.taskName.dirty||taskForm.controls.taskName.touched)">
       field is invalid
@@ -31,12 +30,12 @@
   </div>
 
   <div class="form-group row">
-    <div class="col-sm-6 col-sm-offset-2" >
-      <input type="checkbox" [disabled]="editFlag" formControlName="isParent"  id="isParent" (click)="checkBoxClicked();" >{{'TASK.PARENT'|translate}}
+    <div class="col-sm-6 col-sm-offset-2">
+      <input type="checkbox" [disabled]="editFlag" formControlName="isParent" id="isParent" (click)="checkBoxClicked();">{{'TASK.PARENT'|translate}}
     </div>
     <div class="col-sm-4">
     </div>
-    </div>
+  </div>
 
   <div class="form-group row">
     <div class="col-sm-2">
@@ -58,7 +57,7 @@
     </div>
   </div>
 
-<div class="form-group row">
+  <div class="form-group row">
     <div class="col-sm-2">
       <label class="control-label" for="name">{{'TASK.PARENT'|translate}}</label>
     </div>
@@ -66,7 +65,8 @@
       <input type="text" formControlName="parentTaskName" class="form-control" id="parentTaskName" placeholder="Enter Project Name">
     </div>
     <div class="col-sm-1">
-           <button type="button"  [ngClass]="{ disabled : taskForm.controls.isParent.value}" class="btn btn-default" data-toggle="modal" data-target="#parentTaskModal" >{{'COMMON.SEARCH1'|translate}}</button>
+      <button type="button" [ngClass]="{ disabled : taskForm.controls.isParent.value}" class="btn btn-default" data-toggle="modal"
+        data-target="#parentTaskModal">{{'COMMON.SEARCH1'|translate}}</button>
     </div>
     <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.parentTaskName.invalid && taskForm.controls.parentTaskName.dirty">
       field is invalid
@@ -80,7 +80,7 @@
     <div class="col-sm-3" [ngClass]="{'has-error': taskForm.controls.startDate.invalid && taskForm.controls.startDate.dirty}">
       <input type="date" formControlName="startDate" class="form-control" id="startDate" placeholder="{{'TASK.STARTDATE'|translate}}">
     </div>
-     <div class="col-sm-2">
+    <div class="col-sm-2">
       <label class="control-label " for="name">{{'TASK.ENDDATE'|translate}}</label>
     </div>
     <div class="col-sm-3" [ngClass]="{'has-error': taskForm.controls.endDate.invalid && taskForm.controls.endDate.dirty}">
@@ -90,11 +90,11 @@
     <div class="alert-danger col-sm-2" *ngIf="((taskForm.controls.startDate.invalid && taskForm.controls.startDate.dirty) ||
         (taskForm.controls.endDate.invalid && taskForm.controls.endDate.dirty))">
       field is invalid
-    </div>
+  </div>
   </div>
 
 
-<div class="form-group row">
+  <div class="form-group row">
     <div class="col-sm-2">
       <label class="control-label" for="name">{{'TASK.USER'|translate}}</label>
     </div>
@@ -102,14 +102,15 @@
       <input type="text" formControlName="taskOwner" class="form-control" id="taskOwner">
     </div>
     <div class="col-sm-1">
-           <button type="button"  [ngClass]="{ disabled : taskForm.controls.isParent.value}" class="btn btn-default" data-toggle="modal" data-target="#userModal">{{'COMMON.SEARCH1'|translate}}</button>
+      <button type="button" [ngClass]="{ disabled : taskForm.controls.isParent.value}" class="btn btn-default" data-toggle="modal"
+        data-target="#userModal">{{'COMMON.SEARCH1'|translate}}</button>
     </div>
     <div class="alert-danger col-sm-2" *ngIf="taskForm.controls.taskOwner.invalid && taskForm.controls.taskOwner.dirty">
       field is invalid
     </div>
   </div>
- 
- <!-- <div class="form-group row">
+
+  <!-- <div class="form-group row">
     <input type="hidden" formControlName="taskId" class="form-control" id="taskId">
   </div>-->
 

@@ -1,21 +1,19 @@
 <header class="navbar navbar-inverse navbar-fixed-top">
-  <h1 class="navbar-brand">Project Manager</h1><br><br>
-  <div class="navbar-header"> 
-   <button type="button" 
-   class="navbar-toggle" data-toggle="collapse" 
-   data-target="#myNavbar">
+    <h1 class="navbar-brand">Project Manager</h1><br><br>
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
        <span class="icon-bar"></span>
        <span class="icon-bar"></span>
        <span class="icon-bar"></span> 
    </button>
-  </div> 
-   <div class="collapse navbar-collapse" id="myNavbar">
-       <ul class="nav navbar-nav">
-           <li><a [routerLink]="['ProjectManager/projects']">{{'HEADER.ADDPROJECT' | translate}}</a></li>
-           <li><a [routerLink]="['ProjectManager/tasks']">{{'HEADER.ADDTASK' | translate}}</a></li>
-           <li><a [routerLink]="['ProjectManager/users']">{{'HEADER.ADDUSER' | translate}}</a></li>
-            <li><a [routerLink]="['ProjectManager/viewtasks']">{{'HEADER.VIEWTASK' | translate}}</a></li>
-            </ul>
     </div>
-   
+    <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+            <li><a [routerLink]="['ProjectManager/projects']">{{'HEADER.ADDPROJECT' | translate}}</a></li>
+            <li><a [routerLink]="['ProjectManager/tasks']">{{'HEADER.ADDTASK' | translate}}</a></li>
+            <li><a [routerLink]="['ProjectManager/users']">{{'HEADER.ADDUSER' | translate}}</a></li>
+            <li><a [routerLink]="['ProjectManager/viewtasks']">{{'HEADER.VIEWTASK' | translate}}</a></li>
+        </ul>
+    </div>
+
 </header>

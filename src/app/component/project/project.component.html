@@ -1,10 +1,11 @@
 <br>
 <br><br><br><br>
+<div *ngIf="message" class="alert alert-danger" [innerHTML]="message"></div>
 <form class="form-horizontal" [formGroup]="projectForm" validate>
 
   <div class="form-group row">
     <div class="col-sm-2">
-    <label class="control-label" for="name">{{'PROJECT.PROJECT'|translate}}</label>
+      <label class="control-label" for="name">{{'PROJECT.PROJECT'|translate}}</label>
     </div>
     <div class="col-sm-8" [ngClass]="{'has-error': projectForm.controls.project.invalid && (projectForm.controls.project.dirty||projectForm.controls.project.touched) }">
       <input type="text" formControlName="project" class="form-control" id="project" placeholder="Enter Project Name">
@@ -18,14 +19,14 @@
     <div class="col-sm-2">
     </div>
     <div class="col-sm-2">
-    <input type="checkbox" formControlName="dateCheckbox"  id="dateCheckbox" (click)="checkBoxClicked();" >{{'PROJECT.DATECONT'|translate}}
+      <input type="checkbox" formControlName="dateCheckbox" id="dateCheckbox" (click)="checkBoxClicked();">{{'PROJECT.DATECONT'|translate}}
     </div>
     <div class="col-sm-3" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && (projectForm.controls.startDate.dirty||projectForm.controls.startDate.touched)}">
       <input type="date" formControlName="startDate" class="form-control" id="startDate" placeholder="{{'PROJECT.STARTDATE'|translate}}">
-      </div>
-         <div class="col-sm-3" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
-      <input type="date" formControlName="endDate" class="form-control" id="endDate"
-         placeholder="{{'PROJECT.ENDDATE'|translate}}" (blur)="dateLessThan();">
+    </div>
+    <div class="col-sm-3" [ngClass]="{'has-error': projectForm.controls.startDate.invalid && projectForm.controls.startDate.dirty}">
+      <input type="date" formControlName="endDate" class="form-control" id="endDate" placeholder="{{'PROJECT.ENDDATE'|translate}}"
+        (blur)="dateLessThan();">
     </div>
     <div class="alert-danger col-sm-1" *ngIf="projectForm.controls.startDate.invalid && (projectForm.controls.startDate.dirty||projectForm.controls.startDate.touched)">
       field is invalid
@@ -42,39 +43,40 @@
       field is invalid
     </div>
   </div>-->
-<div class="form-group row">
-  <div class="col-sm-2">
-  </div>
-  <div class="col-sm-7">0</div>
-<div class="col-sm-1">100</div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-7">0</div>
+    <div class="col-sm-1">100</div>
   </div>
 
   <div class="form-group row">
     <div class="col-sm-2">
-    <label class="control-label " for="name">{{'PROJECT.PRIORITY'|translate}}</label>
+      <label class="control-label " for="name">{{'PROJECT.PRIORITY'|translate}}</label>
     </div>
     <div class="col-sm-8">
-      <input type="range" formControlName="priority" class="form-control" id="rangePriority" min="0" max="100" data-show-value="true" data-popup-enabled="true">
+      <input type="range" formControlName="priority" class="form-control" id="rangePriority" min="0" max="100" data-show-value="true"
+        data-popup-enabled="true">
     </div>
-  <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.priority.invalid && projectForm.controls.priority.dirty">
+    <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.priority.invalid && projectForm.controls.priority.dirty">
       field is invalid
     </div>
   </div>
 
-  
+
   <div class="form-group row">
     <div class="col-sm-2">
-    <label class="control-label" for="name">{{'PROJECT.MANAGER'|translate}}</label>
+      <label class="control-label" for="name">{{'PROJECT.MANAGER'|translate}}</label>
     </div>
-    <div  [ngClass]="{'has-error': projectForm.controls.manager.invalid  && projectForm.controls.manager.dirty}">
-     <div class="col-sm-7">
-      <input type="text" formControlName="manager" class="form-control" id="manager" placeholder="{{'PROJECT.MANAGER'|translate}}">
+    <div [ngClass]="{'has-error': projectForm.controls.manager.invalid  && projectForm.controls.manager.dirty}">
+      <div class="col-sm-7">
+        <input type="text" formControlName="manager" class="form-control" id="manager" placeholder="{{'PROJECT.MANAGER'|translate}}">
       </div>
       <div class="col-sm-1">
-      <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#myModal" (click)="displayModal()">{{'COMMON.SEARCH1'|translate}}</button>
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" (click)="displayModal()">{{'COMMON.SEARCH1'|translate}}</button>
       </div>
     </div>
-    
+
     <div class="alert-danger col-sm-2" *ngIf="projectForm.controls.manager.invalid && projectForm.controls.manager.dirty">
       field is invalid
     </div>
@@ -108,7 +110,7 @@
   <hr class="style5">
   <br>
   <div class="form-group row">
-    <div >
+    <div>
       <div class="col-sm-6">
         <input type="text" formControlName="searchProjectName" class="form-control" id="searchProjectName" placeholder="{{'COMMON.SEARCH'|translate}}"
           (keydown.enter)="searchProject()">
@@ -125,12 +127,12 @@
     </div>
   </div>
 </form>
- {{projectForm.controls.value | json}}
+{{projectForm.controls.value | json}}
 <div class="list-group">
   <div *ngFor="let project of projects">
     <div class="row col-sm-12">
-  <hr class="style5">
-  <br>
+      <hr class="style5">
+      <br>
       <div class="col-sm-4 my-background">
         {{'PROJECT.PROJECT'|translate}} {{project.project}}-{{project?.user?.userId}}
         <br> {{'PROJECT.NOOFTASK'|translate}} {{project.numberOfTasks}}
@@ -141,8 +143,9 @@
         <br> {{'PROJECT.ENDDATE'|translate}} {{project.endDate|date:short}}
       </div>
       <div class="col-sm-2">
-        {{'PROJECT.PRIORITY1'|translate}} 
-        <br><div class="my-background"><br>{{project.priority}}</div>
+        {{'PROJECT.PRIORITY1'|translate}}
+        <br>
+        <div class="my-background"><br>{{project.priority}}</div>
       </div>
       <div class="col-sm-2">
         <button type="button" (click)="loadProjectById(project.projectId)" class="btn btn-default">{{'COMMON.UPDATE'|translate}}</button>
@@ -151,43 +154,46 @@
       </div>
     </div>
   </div>
- </div>
+</div>
 
-  <!-- Modal -->
- 
-  <div class="modal" id="myModal" role="dialog"   aria-hidden="true" data-backdrop="false">
-    <div class="modal-dialog" >
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
-          <h4 class="modal-title">Search Managers</h4>
-           <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
-        </div>
-        <div class="modal-body">
-          <!--<ul>
+<div class="alert alert-danger" *ngIf="projects?.length == 0">
+  {{'MESSAGES.EMPTY'|translate}}
+</div>
+<!-- Modal -->
+
+<div class="modal" id="myModal" role="dialog" aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" #closeAddExpenseModal>&times;</button>
+        <h4 class="modal-title">Search Managers</h4>
+        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
+      </div>
+      <div class="modal-body">
+        <!--<ul>
     <li *ngFor="let n of managers | UserPipe: queryString">
       {{n.firstName}},{{n.lastName}}
     </li>
   </ul>-->
-    <table class="table table-hover">
-    <thead>
-        <tr>
-            <th>Filtered Manager</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let n of managers | UserPipe: queryString">
-            <td (click)="selectManager(n.userId,n.firstName+' '+n.lastName)"> {{n.firstName}}&nbsp;{{n.lastName}}</td>
-        </tr>
-    </tbody>
-</table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Filtered Manager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let n of managers | UserPipe: queryString">
+              <td (click)="selectManager(n.userId,n.firstName+' '+n.lastName)"> {{n.firstName}}&nbsp;{{n.lastName}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
+
   </div>
+</div>

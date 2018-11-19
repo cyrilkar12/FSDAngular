@@ -1,75 +1,94 @@
 <br><br><br><br>
+<div *ngIf="message" class="alert alert-danger" [innerHTML]="message"></div>
 <form class="form-horizontal" [formGroup]="viewTaskForm" novalidate>
-<div class="form-group row">
-  <div class="col-sm-12">
-    <div class="col-sm-2">
-      <label class="control-label" for="name">{{'PROJECT.PROJECT'|translate}}</label>
+  <div class="form-group row">
+    <div class="col-sm-12">
+      <div class="col-sm-2">
+        <label class="control-label" for="name">{{'PROJECT.PROJECT'|translate}}</label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" formControlName="projectName" class="form-control" id="projectName" (ngModelChange)="loadAllTasks();"
+          placeholder="{{'COMMON.SEARCH'|translate}}">
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">{{'COMMON.SEARCH1'|translate}}</button>
+      </div>
+      <div class="col-sm-7">{{'VIEWTASK.SORT'|translate}}
+        <button type="button" (click)="sortTasks(1)" class="btn btn-default">{{'VIEWTASK.STARTDATE'|translate}}</button>
+        <button type="button" (click)="sortTasks(2)" class="btn btn-default">{{'VIEWTASK.ENDDATE'|translate}}</button>
+        <button type="button" (click)="sortTasks(3)" class="btn btn-default">{{'VIEWTASK.PRIORITY1'|translate}}</button>
+        <button type="button" (click)="sortTasks(4)" class="btn btn-default">{{'VIEWTASK.COMPLETE'|translate}}</button>
+      </div>
     </div>
-    <div class="col-sm-2">
-      <input type="text" formControlName="projectName" class="form-control" id="projectName"
-           (ngModelChange)="loadAllTasks();" placeholder="{{'COMMON.SEARCH'|translate}}">
-    </div>
-    <div class="col-sm-1">
-      <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">{{'COMMON.SEARCH1'|translate}}</button>
-    </div>
-    <div class="col-sm-7">{{'VIEWTASK.SORT'|translate}}
-      <button type="button" (click)="sortTasks(1)" class="btn btn-default">{{'VIEWTASK.STARTDATE'|translate}}</button>
-      <button type="button" (click)="sortTasks(2)" class="btn btn-default">{{'VIEWTASK.ENDDATE'|translate}}</button>
-      <button type="button" (click)="sortTasks(3)" class="btn btn-default">{{'VIEWTASK.PRIORITY1'|translate}}</button>
-      <button type="button" (click)="sortTasks(4)" class="btn btn-default">{{'VIEWTASK.COMPLETE'|translate}}</button>
-    </div>
-  </div>
-  <!--  <div class="alert-danger col-sm-2" *ngIf="viewTaskForm.controls.projectName.invalid && projectForm.controls.projectName.dirty">
+    <!--  <div class="alert-danger col-sm-2" *ngIf="viewTaskForm.controls.projectName.invalid && projectForm.controls.projectName.dirty">
       field is invalid
     </div>-->
-</div>
+  </div>
 </form>
 {{viewTaskForm.controls.value | json}}
 
-  <hr class="style5">
-      <br>
+<hr class="style5">
+<br>
 
 <div class="list-group">
   <div *ngFor="let task of tasks">
-      <div class="row col-sm-12">
-        <hr class="style5">
-        <div class="col-sm-3"><h4> {{'VIEWTASK.TASK'|translate}}</h4></div>
-        <div class="col-sm-3"> <h4>{{'VIEWTASK.PARENT'|translate}}</h4></div>
-        <div class="col-sm-1"> <h4>{{'VIEWTASK.PRIORITY'|translate}}</h4></div>
-        <div class="col-sm-2"> <h4>{{'VIEWTASK.START'|translate}}</h4></div>
-        <div class="col-sm-2"> <h4>{{'VIEWTASK.END'|translate}}</h4></div>
-        <div class="col-sm-3"></div>
+    <div class="row col-sm-12">
+      <hr class="style5">
+      <div class="col-sm-3">
+        <h4> {{'VIEWTASK.TASK'|translate}}</h4>
       </div>
-      <div class="row col-sm-12">
-        <div class="col-sm-3 text-center">
-         <div id="pad" class="my-background">
+      <div class="col-sm-3">
+        <h4>{{'VIEWTASK.PARENT'|translate}}</h4>
+      </div>
+      <div class="col-sm-1">
+        <h4>{{'VIEWTASK.PRIORITY'|translate}}</h4>
+      </div>
+      <div class="col-sm-2">
+        <h4>{{'VIEWTASK.START'|translate}}</h4>
+      </div>
+      <div class="col-sm-2">
+        <h4>{{'VIEWTASK.END'|translate}}</h4>
+      </div>
+      <div class="col-sm-3"></div>
+    </div>
+    <div class="row col-sm-12">
+      <div class="col-sm-3 text-center">
+        <div id="pad" class="my-background">
           {{task.taskName}}
         </div>
-        </div>
-         <div class="col-sm-3 text-center">
-          <div id="pad" class="my-background">
-          {{task?.parentTask?.parentTaskName}}
-          </div>
-        </div>
-        <div class="col-sm-1">
-          {{task.priority}}
-        </div>
-        <div class="col-sm-2">
-          {{task.startDate|date:short}}
-        </div>
-        <div class="col-sm-2">
-          {{task.endDate|date:short}}
-        </div>
-        <div class="col-sm-1">
-          <button type="button" [routerLink]="['../editTask/',task.taskId]" class="btn btn-default">{{'COMMON.UPDATE'|translate}}</button>
-          <br>
-          <button type="button" (click)="endTask(task.taskId)" class="btn btn-default">{{'VIEWTASK.ENDTASK'|translate}}</button>
+      </div>
+      <div *ngIf="task?.parentTask==null || task?.parentTask?.parentTaskName==null" class="col-sm-3 text-center">
+        <div id="pad" class="my-background">
+          {{'VIEWTASK.NOPARENT'|translate}}
         </div>
       </div>
-
+      <div *ngIf="task?.parentTask?.parentTaskName.length>0" class="col-sm-3 text-center">
+        <div id="pad" class="my-background">
+          {{task?.parentTask?.parentTaskName}}
+        </div>
+      </div>
+      <div class="col-sm-1">
+        {{task.priority}}
+      </div>
+      <div class="col-sm-2">
+        {{task.startDate|date:short}}
+      </div>
+      <div class="col-sm-2">
+        {{task.endDate|date:short}}
+      </div>
+      <div class="col-sm-1">
+        <button type="button" [routerLink]="['../editTask/',task.taskId]" class="btn btn-default">{{'COMMON.UPDATE'|translate}}</button>
+        <br>
+        <button type="button" (click)="endTask(task.taskId)" class="btn btn-default">{{'VIEWTASK.ENDTASK'|translate}}</button>
+      </div>
     </div>
-  </div>
 
+  </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="tasks?.length == 0">
+  {{'MESSAGES.EMPTY'|translate}}
+</div>
 
 <!-- Modal Project-->
 
@@ -80,7 +99,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" #closeProjectModal>&times;</button>
         <h4 class="modal-title">Search Projects</h4>
-        <input type="text" [(ngModel)]="queryString"  id="search" placeholder="Search to type">
+        <input type="text" [(ngModel)]="queryString" id="search" placeholder="Search to type">
       </div>
       <div class="modal-body">
         <table class="table table-hover">

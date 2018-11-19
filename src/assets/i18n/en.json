@@ -55,6 +55,26 @@
         "PRIORITY":"Priority",
         "START":"Start",
         "END":"End",
-        "ENDTASK":"End Task"
+        "ENDTASK":"End Task",
+        "NOPARENT": "There is no parent for this task"
+     },
+     "MESSAGES":{
+         "ADDUSER":"User Added Successfully",
+         "MODUSER":"User Modified Successfully",
+         "DELUSER":"User Deleted Successfully",
+         "ERRORHEADER":"Correct the below Errors",
+         "FORMFIELD":"Form Field",
+         "ERROR":"Error",
+         "EMPTY":"No Record Found",
+         "MANAGERERR":"Manager field is required",
+         "ADDPROJECT":"Project Added Successfully",
+         "SUSPENDPROJECT":"Project Suspended Successfully",
+         "MODPROJECT":"Project Modified Successfully",
+         "DELPROJECT":"Project Deleted Successfully",
+         "ADDTASK":"Task Added Successfully",
+         "MODTASK":"Task Modified Successfully",
+         "DELTASK":"Task Deleted Successfully",
+         "TASKERR":"Confirm Project / Task Owner choosen",
+         "TASKCOMP":"Task Completed"
      }
 }

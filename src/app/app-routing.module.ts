@@ -13,10 +13,6 @@ const routes: Routes = [
     { path: 'ProjectManager/tasks', component: TaskComponent },
     { path: 'ProjectManager/viewtasks', component: ViewtaskComponent },
     { path: 'ProjectManager/editTask/:id', component: TaskComponent }
-  /*{ path: 'insert', component: AppComponent },
-  { path: 'modify/:id', component: AppComponent },
-  { path: 'delete/:id', component: AppComponent },
-   { path: 'getBook/:id', component: AppComponent }*/
 ];
 
 

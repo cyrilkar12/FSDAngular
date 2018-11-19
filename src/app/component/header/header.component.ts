@@ -9,13 +9,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class HeaderComponent implements OnInit {
 
   constructor(public translate: TranslateService) {
-     translate.addLangs(["en", "es"]);
-        translate.setDefaultLang('en');
+    translate.addLangs(["en", "es"]);
+    translate.setDefaultLang('en');
 
-        let browserLang = translate.getBrowserLang();
-        console.log('browser lang>>>'+browserLang);
-        translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
-   }
+    let browserLang = translate.getBrowserLang();
+    //console.log('browser lang>>>' + browserLang);
+    translate.use(browserLang.match(/en|es/) ? browserLang : 'en');
+  }
 
   ngOnInit() {
 
